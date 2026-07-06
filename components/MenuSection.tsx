@@ -39,8 +39,6 @@ export function MenuSection() {
           />
 
           <div className="relative mb-12">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-45-fade-left md:w-12" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-45-fade-right md:w-12" />
             <div
               ref={tabsRef}
               className="scrollbar-hide flex gap-2 overflow-x-auto px-1 pb-1"

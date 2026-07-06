@@ -11,22 +11,22 @@ const moments = [
     title: "Jutro",
     accent: "08:00",
     description: "Prva kafa, doručak i lagan start dana u opuštenoj bistro atmosferi.",
-    image: "/images/hero-coffee.png",
-    alt: "Jutarnja kafa u Idolo",
+    image: "/images/menu-pasta.png",
+    alt: "Espresso u Idolo",
   },
   {
     title: "Dan",
     accent: "12:00",
     description: "Pizza, paste, roštilj i salate — za ručak sa ekipom ili brzi obrok u gradu.",
-    image: "/images/menu-pizza.png",
-    alt: "Hrana u Idolo",
+    image: "/images/dishes/carbonara.png",
+    alt: "Pasta u Idolo",
   },
   {
     title: "Veče",
     accent: "20:00",
     description: "Kokteli, piće i druženje — Idolo kada grad veče i živi.",
-    image: "/images/gallery-cocktail.png",
-    alt: "Večernje piće u Idolo",
+    image: "/images/gallery-table-spread.png",
+    alt: "Koktel u Idolo",
   },
 ] as const;
 
