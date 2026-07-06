@@ -42,6 +42,10 @@ export const metadata: Metadata = {
     locale: "sr_RS",
     type: "website",
   },
+  icons: {
+    icon: [{ url: "/images/logo-header.png", type: "image/png" }],
+    apple: "/images/logo-header.png",
+  },
 };
 
 export const viewport = {

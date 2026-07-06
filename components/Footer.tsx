@@ -38,7 +38,8 @@ export function Footer() {
 
         <div className="gold-line my-10 opacity-25" />
 
-        <div className="mb-10 flex justify-center">
+        <div className="mb-10 flex flex-col items-center gap-3">
+          <p className="font-body text-[10px] uppercase tracking-[0.24em] text-cream/30">Powered by</p>
           <BrandCredit />
         </div>
 
@@ -46,7 +47,7 @@ export function Footer() {
           <p className="font-body text-[11px] uppercase tracking-[0.14em] text-cream/35">
             © {new Date().getFullYear()} {SITE.name}
           </p>
-          <div className="flex gap-8">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 md:gap-x-8">
             <a href={phoneHref()} className="font-body text-[11px] uppercase tracking-[0.16em] text-cream/40 transition-colors hover:text-gold">
               Pozovi
             </a>
