@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MealRecommend } from "@/components/MealRecommend";
 import { MenuSection } from "@/components/MenuSection";
 import { PageMain } from "@/components/PageMain";
 
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 export default function MenuPage() {
   return (
     <PageMain>
+      <MealRecommend />
       <MenuSection />
     </PageMain>
   );
