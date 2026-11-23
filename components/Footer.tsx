@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { BrandCredit } from "@/components/BrandCredit";
+import { LegalFinePrint } from "@/components/LegalFinePrint";
 import { phoneHref, SITE, whatsappHref } from "@/lib/constants";
 import { images } from "@/lib/images";
 
@@ -77,6 +78,8 @@ export function Footer() {
             </a>
           </div>
         </div>
+
+        <LegalFinePrint />
       </div>
     </footer>
   );

@@ -27,6 +27,10 @@ export const SITE = {
     name: "Čokoladni AJ TI",
     url: "https://cokoladni.photo",
   },
+  legalName:
+    "Aleksandra Kostić preduzetnik, delatnost restorana i pokretnih ugostiteljskih objekata Idolo KS, Kruševac",
+  pib: "114053139",
+  mb: "67289196",
 } as const;
 
 export function phoneHref() {
