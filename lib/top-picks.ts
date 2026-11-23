@@ -6,35 +6,31 @@ export type TopPickMeta = {
 
 export const topPicks: TopPickMeta[] = [
   {
-    name: "Idolo kafa",
-    hook: "Espresso, sladoled i Baileys",
+    name: "Lava piletina",
+    hook: "Njoke, piletina, ajvar i topljeni sir",
   },
   {
-    name: "Engleski doručak",
-    hook: "Klasičan doručak za pun start dana",
+    name: "Domaćinski doručak",
+    hook: "Jaja, fokača, pršuta i ajvar",
+  },
+  {
+    name: "Twins burgeri",
+    hook: "Dve lepinje, pavlaka i karamelizovani luk",
+  },
+  {
+    name: "Idolo pica",
+    hook: "Naša pica sa šunkom, pančetom i pečurkama",
   },
   {
     name: "Carbonara",
-    hook: "Kremasta pasta koja uvek pogađa",
+    hook: "Kremasta pasta sa pančetom i parmezanom",
   },
   {
     name: "Classic burger",
     hook: "Sočan burger — omiljeni izbor gostiju",
   },
   {
-    name: "Idolo pica",
-    hook: "Naša pica sa punim punjenjem",
-  },
-  {
-    name: "Cezar salata",
-    hook: "Sveža, bogata i savršena za dan",
-  },
-  {
     name: "Ramstek",
-    hook: "Premium meso za pravi bistro doživljaj",
-  },
-  {
-    name: "Cheesecake",
-    hook: "Slatki završetak Idolo trenutka",
+    hook: "Juneći ramstek sa prilozima",
   },
 ];

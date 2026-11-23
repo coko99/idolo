@@ -93,7 +93,10 @@ export function Hero() {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Button href={routes.menu}>Pogledaj meni</Button>
+              <Button href="#preporuka">Klikni da ti preporučimo jelo</Button>
+              <Button href={routes.menu} variant="outline">
+                Pogledaj meni
+              </Button>
               <Button href={phoneHref()} variant="outline">
                 Pozovi odmah
               </Button>

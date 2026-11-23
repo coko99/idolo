@@ -17,16 +17,16 @@ const moments = [
   {
     title: "Dan",
     accent: "12:00",
-    description: "Pizza, paste, roštilj i salate — za ručak sa ekipom ili brzi obrok u gradu.",
-    image: "/images/dishes/carbonara.png",
-    alt: "Pasta u Idolo",
+    description: "Lava piletina, pica i roštilj — za ručak sa ekipom ili brzi obrok u gradu.",
+    image: "/images/dishes/lava-piletina.jpg",
+    alt: "Lava piletina u Idolo",
   },
   {
     title: "Veče",
     accent: "20:00",
-    description: "Kokteli, piće i druženje — Idolo kada grad veče i živi.",
-    image: "/images/gallery-table-spread.png",
-    alt: "Koktel u Idolo",
+    description: "Twins burgeri, piće i druženje — Idolo kada grad veče.",
+    image: "/images/dishes/twins-burgeri.jpg",
+    alt: "Twins burgeri u Idolo",
   },
 ] as const;
 

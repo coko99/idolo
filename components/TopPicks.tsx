@@ -11,7 +11,6 @@ import { topPicks } from "@/lib/top-picks";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 type ResolvedPick = MenuItem & {
-  rank: number;
   hook: string;
   category: string;
   image?: string;
@@ -30,13 +29,12 @@ export function TopPicks() {
 
   const picks = useMemo(() => {
     return topPicks
-      .map((pick, index) => {
+      .map((pick) => {
         const found = findMenuItem(pick.name);
         if (!found) return null;
 
         return {
           ...found.item,
-          rank: index + 1,
           hook: pick.hook,
           category: found.category,
           image: pick.image ?? getDishImage(found.item.name) ?? found.item.image,
@@ -53,69 +51,77 @@ export function TopPicks() {
             dark
             accent="Top izbor"
             title="Šta preporučujemo da probaš kod nas"
-            description="Naš tim bira jela i pića koja gosti najviše vole — od jutarnje kafe do večernjeg deserta."
+            description="Glavna jela koja vredi naručiti — od doručka i burgera do pice i preporuke šefa."
             className="mb-10 md:mb-14"
           />
 
-          <div className="scrollbar-hide -mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible lg:grid-cols-4 md:px-0">
-            {picks.map((item) => {
-              const price = formatItemPrice(item);
-
-              return (
-                <article
-                  key={item.name}
-                  className="card-dark group w-[82vw] max-w-[320px] shrink-0 snap-center overflow-hidden rounded-2xl md:w-auto md:max-w-none"
+          <div className="marquee-viewport -mx-5 overflow-hidden md:-mx-8">
+            <div className="marquee-track flex w-max">
+              {[0, 1].map((copy) => (
+                <div
+                  key={copy}
+                  className="flex gap-4 pr-4"
+                  aria-hidden={copy === 1 ? true : undefined}
+                  inert={copy === 1 ? true : undefined}
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-black/40">
-                    {item.image ? (
-                      <>
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                          sizes="(max-width: 768px) 82vw, 25vw"
-                        />
-                        <div className="image-overlay absolute inset-0 opacity-75" />
-                      </>
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center border border-dashed border-cream/15 bg-gradient-45-brand-muted">
-                        <p className="font-body text-[10px] uppercase tracking-[0.2em] text-cream/35">
-                          Mesto za fotografiju
-                        </p>
-                      </div>
-                    )}
-                    <span className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-grad-peach/35 bg-black/70 font-heading text-xs tracking-[0.08em] text-grad-peach">
-                      {String(item.rank).padStart(2, "0")}
-                    </span>
-                  </div>
+                  {picks.map((item) => {
+                    const price = formatItemPrice(item);
 
-                  <div className="p-5 md:p-6">
-                    <p className="font-body mb-2 text-[10px] uppercase tracking-[0.18em] text-cream/40">
-                      {item.category}
-                    </p>
-                    <h3 className="font-heading mb-2 text-lg uppercase tracking-[0.1em] text-soft-white md:text-xl">
-                      {item.name}
-                    </h3>
-                    <p className="font-body mb-3 text-sm leading-relaxed text-grad-peach/85">{item.hook}</p>
-                    {price && (
-                      <p className="font-heading mb-4 text-lg tracking-[0.06em] text-grad-peach">{price}</p>
-                    )}
-                    <p className="font-body mb-5 line-clamp-2 text-sm leading-[1.65] text-cream/50">
-                      {item.description}
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setOrderItem(item.name)}
-                      className="-mx-1 inline-flex min-h-[44px] items-center gap-3 px-1 font-body text-[10px] font-semibold uppercase tracking-[0.18em] text-grad-peach transition-colors hover:text-grad-amber"
-                    >
-                      <span className="h-px w-6 bg-gradient-45-accent-line opacity-70" />
-                      Poruči
-                    </button>
-                  </div>
-                </article>
-              );
-            })}
+                    return (
+                      <article
+                        key={`${copy}-${item.name}`}
+                        className="card-dark group w-[280px] shrink-0 overflow-hidden rounded-2xl sm:w-[320px]"
+                      >
+                        <div className="relative aspect-[4/3] overflow-hidden bg-black/40">
+                          {item.image ? (
+                            <>
+                              <Image
+                                src={item.image}
+                                alt={copy === 0 ? item.name : ""}
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                                sizes="320px"
+                              />
+                              <div className="image-overlay absolute inset-0 opacity-75" />
+                            </>
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center border border-dashed border-cream/15 bg-gradient-45-brand-muted">
+                              <p className="font-body text-[10px] uppercase tracking-[0.2em] text-cream/35">
+                                Mesto za fotografiju
+                              </p>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="p-5">
+                          <p className="font-body mb-2 text-[10px] uppercase tracking-[0.18em] text-cream/40">
+                            {item.category}
+                          </p>
+                          <h3 className="font-heading mb-2 text-lg uppercase tracking-[0.1em] text-soft-white">
+                            {item.name}
+                          </h3>
+                          <p className="font-body mb-3 text-sm leading-relaxed text-grad-peach/85">{item.hook}</p>
+                          {price && (
+                            <p className="font-heading mb-4 text-lg tracking-[0.06em] text-grad-peach">{price}</p>
+                          )}
+                          <p className="font-body mb-5 line-clamp-2 text-sm leading-[1.65] text-cream/50">
+                            {item.description}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => setOrderItem(item.name)}
+                            className="-mx-1 inline-flex min-h-[44px] items-center gap-3 px-1 font-body text-[10px] font-semibold uppercase tracking-[0.18em] text-grad-peach transition-colors hover:text-grad-amber"
+                          >
+                            <span className="h-px w-6 bg-gradient-45-accent-line opacity-70" />
+                            Poruči
+                          </button>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="mt-10 text-center md:mt-12">

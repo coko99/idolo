@@ -6,6 +6,7 @@ import { DeliveryModal } from "@/components/DeliveryModal";
 import { getDishImage } from "@/lib/dish-images";
 import {
   formatItemPrice,
+  formatPrice,
   itemWantsPhoto,
   menuCategories,
   menuTabIds,
@@ -158,6 +159,25 @@ export function MenuSection() {
                       <p className="font-body mb-2 text-sm leading-[1.7] text-cream/55">
                         {item.description}
                       </p>
+                    )}
+
+                    {item.addons && item.addons.length > 0 && (
+                      <div className="mb-3 mt-3 border-t border-cream/10 pt-3">
+                        <p className="font-body mb-2 text-[10px] uppercase tracking-[0.18em] text-gold/70">
+                          Može da se doda
+                        </p>
+                        <ul className="space-y-1.5">
+                          {item.addons.map((addon) => (
+                            <li
+                              key={addon.name}
+                              className="flex items-baseline justify-between gap-3 font-body text-sm leading-snug text-cream/55"
+                            >
+                              <span>{addon.name}</span>
+                              <span className="shrink-0 text-grad-peach/90">{formatPrice(addon.price)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
 
                     {item.note && (

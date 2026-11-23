@@ -542,6 +542,25 @@ body {
   backdrop-filter: blur(6px);
 }
 
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee-left 42s linear infinite;
+  will-change: transform;
+}
+
+.marquee-viewport:hover .marquee-track,
+.marquee-viewport:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -618,6 +637,15 @@ body {
 
   .brand-credit-neon-glow {
     text-shadow: 0 0 10px rgba(45, 212, 199, 0.55);
+  }
+
+  .marquee-viewport {
+    overflow-x: auto;
+  }
+
+  .marquee-track {
+    animation: none !important;
+    transform: none;
   }
 
   *,

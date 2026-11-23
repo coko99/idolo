@@ -1,3 +1,8 @@
+export type MenuAddon = {
+  name: string;
+  price: number;
+};
+
 export type MenuItem = {
   name: string;
   description: string;
@@ -9,6 +14,8 @@ export type MenuItem = {
   group?: string;
   tag?: "popularno" | "preporuka" | "novo";
   note?: string;
+  /** Optional extras listed under the dish, not as their own cards. */
+  addons?: MenuAddon[];
 };
 
 export type MenuCategory = {
@@ -32,8 +39,6 @@ function pizza(price24: number, price32: number): string {
   return `24 cm ${price24.toLocaleString("sr-RS")} · 32 cm ${price32.toLocaleString("sr-RS")} RSD`;
 }
 
-const breakfastAddons = "Dodaci po izboru";
-
 export const menuCategories: MenuCategory[] = [
   {
     id: "dorucak",
@@ -44,18 +49,14 @@ export const menuCategories: MenuCategory[] = [
         name: "Jaja po želji",
         price: 390,
         description: "Tri jaja (omlet, kajgana ili na oko), paradajz, krastavac i hleb.",
+        addons: [
+          { name: "Sir", price: 130 },
+          { name: "Šunka", price: 130 },
+          { name: "Pančeta", price: 230 },
+          { name: "Povrće (tikvica, pečurke i sveža paprika)", price: 100 },
+          { name: "Ajvar", price: 170 },
+        ],
       },
-      { name: "Sir", price: 130, description: "", group: breakfastAddons, imageSlot: false },
-      { name: "Šunka", price: 130, description: "", group: breakfastAddons, imageSlot: false },
-      { name: "Pančeta", price: 230, description: "", group: breakfastAddons, imageSlot: false },
-      {
-        name: "Povrće (tikvica, pečurke i sveža paprika)",
-        price: 100,
-        description: "",
-        group: breakfastAddons,
-        imageSlot: false,
-      },
-      { name: "Ajvar", price: 170, description: "", group: breakfastAddons, imageSlot: false },
       {
         name: "Omlet u tortilji",
         price: 580,
@@ -637,9 +638,13 @@ export const menuCategories: MenuCategory[] = [
   },
 ];
 
+export function formatPrice(amount: number): string {
+  return rsd(amount);
+}
+
 export function formatItemPrice(item: MenuItem): string {
   if (item.priceLabel) return item.priceLabel;
-  if (item.price !== undefined) return rsd(item.price);
+  if (item.price !== undefined) return formatPrice(item.price);
   return "";
 }
 
