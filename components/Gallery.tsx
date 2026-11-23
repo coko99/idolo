@@ -13,9 +13,10 @@ export function Gallery() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
           dark
+          heading="h1"
           accent="Galerija"
           title="Ukus, ambijent, atmosfera"
-          description="Hrana, kafa, piće, enterijer i detalji serviranja — toplo, prirodno i moderno."
+          description="Hrana, doručak, kokteli i enterijer IDOLO Caffe Bistro u Kruševcu."
         />
 
         <div className="columns-2 gap-3 md:columns-3 md:gap-4 lg:columns-4">

@@ -6,6 +6,10 @@ export const routes = {
   contact: "/kontakt",
 } as const;
 
+export function menuCategoryHref(categoryId: string) {
+  return `${routes.menu}#meni-${categoryId}`;
+}
+
 export const navLinks = [
   { href: routes.home, label: "Početna" },
   { href: routes.menu, label: "Meni" },

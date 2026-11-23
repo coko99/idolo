@@ -17,10 +17,11 @@ export function About() {
             <SectionHeader
               align="left"
               dark
+              heading="h1"
               className="mb-8 md:mb-10"
               accent="O nama"
               title="Gradska oaza za svaki deo dana"
-              description="Idolo Bistro Bar je mesto za svaki deo dana — od prve jutarnje kafe, preko doručka i kvalitetnog obroka, do večernjeg pića i opuštenog druženja."
+              description="IDOLO Caffe Bistro je restoran u Kruševcu za svaki deo dana — od prve jutarnje kafe i doručka, preko hrane, do koktela i opuštenog druženja."
             />
 
             <p className="font-body text-[15px] leading-[1.85] text-cream/70 md:text-base">

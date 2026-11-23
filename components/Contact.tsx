@@ -23,9 +23,10 @@ export function Contact() {
       <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
           dark
+          heading="h1"
           accent="Kontakt"
           title="Kako do nas"
-          description="Imaš pitanje ili želiš da poručiš? Pozovi nas ili pošalji poruku na WhatsApp."
+          description={`${SITE.name}, ${SITE.address}. Pozovi ${SITE.phoneDisplay} ili otvori mapu. Radno vreme je ispod.`}
         />
 
         <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-10">

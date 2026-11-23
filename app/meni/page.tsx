@@ -1,12 +1,14 @@
-import type { Metadata } from "next";
 import { MealRecommend } from "@/components/MealRecommend";
 import { MenuSection } from "@/components/MenuSection";
 import { PageMain } from "@/components/PageMain";
+import { routes } from "@/lib/routes";
+import { MENU_DESCRIPTION, MENU_TITLE, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Meni | Idolo Bistro Bar — Kruševac",
-  description: "Pogledaj meni Idolo Bistro Bar — doručak, pizza, paste, burgeri, roštilj i piće.",
-};
+export const metadata = pageMetadata({
+  title: MENU_TITLE,
+  description: MENU_DESCRIPTION,
+  path: routes.menu,
+});
 
 export default function MenuPage() {
   return (

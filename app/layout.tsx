@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Barlow_Condensed, Great_Vibes, Montserrat } from "next/font/google";
 import "./globals.css";
 import { SiteShell } from "@/components/SiteShell";
+import { SITE } from "@/lib/constants";
+import { HOME_DESCRIPTION, HOME_TITLE, restaurantJsonLd } from "@/lib/seo";
 
 const barlow = Barlow_Condensed({
   variable: "--font-barlow",
@@ -22,25 +24,36 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Idolo Bistro Bar | Kafa, doručak, hrana i piće — Kruševac",
-  description:
-    "Idolo Bistro Bar u Kruševcu — kafa, doručak, pizza, burgeri, paste, roštilj i piće u centru grada. Pozovi ili piši na WhatsApp za porudžbinu.",
-  keywords: [
-    "Idolo Kruševac",
-    "Caffe Bistro Idolo",
-    "Idolo Bistro Bar",
-    "restoran Kruševac",
-    "doručak Kruševac",
-    "pizza Kruševac",
-    "dostava hrane Kruševac",
-    "kafić Kruševac",
-    "bistro Kruševac",
-  ],
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: HOME_TITLE,
+    template: "%s | IDOLO Caffe Bistro Kruševac",
+  },
+  description: HOME_DESCRIPTION,
+  applicationName: SITE.name,
+  robots: { index: true, follow: true },
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Idolo Bistro Bar — Kruševac",
-    description: "Kafa, doručak, hrana i piće u srcu Kruševca.",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     locale: "sr_RS",
     type: "website",
+    siteName: SITE.name,
+    url: "/",
+    images: [
+      {
+        url: "/images/dishes/lava-piletina.jpg",
+        width: 960,
+        height: 720,
+        alt: "Lava piletina u IDOLO Caffe Bistro, Kruševac",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: ["/images/dishes/lava-piletina.jpg"],
   },
   icons: {
     icon: [{ url: "/images/logo-header.png", type: "image/png" }],
@@ -62,10 +75,14 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="sr"
+      lang="sr-Latn"
       className={`${barlow.variable} ${montserrat.variable} ${greatVibes.variable} scroll-smooth`}
     >
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd()) }}
+        />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

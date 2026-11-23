@@ -9,7 +9,7 @@ export type HeroSlide = {
 export const heroSlides: HeroSlide[] = [
   {
     image: "/images/hero-steak-salad.png",
-    alt: "Salata sa biftekom u Idolo Bistro Bar",
+    alt: "Salata sa biftekom u IDOLO Caffe Bistro, Kruševac",
     accent: "caffe bistro",
     headline: "Idolo",
     description: "Kafa, doručak, hrana i piće u srcu Kruševca.",

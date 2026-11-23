@@ -1,6 +1,7 @@
 export const SITE = {
-  name: "Idolo Bistro Bar",
+  name: "IDOLO Caffe Bistro",
   tagline: "Caffe Bistro Idolo",
+  url: "https://idolo.vercel.app",
   phone: "0691738800",
   phoneDisplay: "069/173-88-00",
   address: "Kajmakčalanska 2, Kruševac",

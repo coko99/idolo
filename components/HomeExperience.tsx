@@ -77,7 +77,7 @@ export function HomeExperience() {
           </div>
 
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center md:mt-12">
-            <Button href={routes.menu}>Istraži meni</Button>
+            <Button href={routes.menu}>Pogledaj jelovnik</Button>
             <Button href={routes.about} variant="outline">
               Upoznaj Idolo
             </Button>
@@ -176,7 +176,7 @@ export function HomeExperience() {
               <Button href={whatsappHref()} variant="whatsapp" target="_blank" rel="noopener noreferrer" className="w-full">
                 Piši na WhatsApp
               </Button>
-              <Button href={routes.contact} variant="outline" className="w-full">
+              <Button href={SITE.mapLink} variant="outline" target="_blank" rel="noopener noreferrer" className="w-full">
                 Kako do nas
               </Button>
               <Button

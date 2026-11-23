@@ -54,7 +54,7 @@ function MenuItemCard({
           {image ? (
             <Image
               src={image}
-              alt={item.name}
+                            alt={`${item.name}, ${category.label} u IDOLO Caffe Bistro, Kruševac`}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               sizes="(max-width: 768px) 100vw, 33vw"
@@ -72,9 +72,9 @@ function MenuItemCard({
 
       <div className="p-6">
         <div className="mb-3 flex items-start justify-between gap-4">
-          <h4 className="font-heading text-base uppercase tracking-[0.1em] text-soft-white md:text-lg">
+          <h3 className="font-heading text-base uppercase tracking-[0.1em] text-soft-white md:text-lg">
             {item.name}
-          </h4>
+          </h3>
           {item.tag && (
             <span className="shrink-0 rounded-full border border-grad-peach/40 bg-grad-amber/10 px-2.5 py-1 font-body text-[9px] font-semibold uppercase tracking-[0.14em] text-grad-peach">
               {tagLabels[item.tag]}
@@ -201,9 +201,10 @@ export function MenuSection() {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <SectionHeader
             dark
+            heading="h1"
             accent="Digitalni meni"
-            title="Istraži naš ukus"
-            description="Listaš ceo cenovnik redom. Kategorije ostaju gore, pa možeš i da skočiš na onu koju tražiš."
+            title="Jelovnik"
+            description="Doručak, pice, paste, tortilje, burgeri, meso, salate, dezerti, kafe i kokteli. Listaš ceo cenovnik, a kategorije ostaju gore."
           />
         </div>
 
@@ -217,12 +218,15 @@ export function MenuSection() {
               {menuCategories.map((category) => {
                 const active = activeId === category.id;
                 return (
-                  <button
+                  <a
                     key={category.id}
-                    type="button"
+                    href={`#${categoryDomId(category.id)}`}
                     data-tab={category.id}
                     aria-current={active ? "true" : undefined}
-                    onClick={() => selectCategory(category.id)}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      selectCategory(category.id);
+                    }}
                     className={`shrink-0 rounded-full border px-5 py-2.5 font-body text-[10px] font-semibold uppercase tracking-[0.16em] transition-all duration-300 ${
                       active
                         ? "border-grad-peach/50 bg-gradient-45-brand-soft text-grad-peach"
@@ -230,7 +234,7 @@ export function MenuSection() {
                     }`}
                   >
                     {category.label}
-                  </button>
+                  </a>
                 );
               })}
             </div>
@@ -250,9 +254,9 @@ export function MenuSection() {
                   <p className="font-body mb-2 text-[10px] uppercase tracking-[0.22em] text-gold/70">
                     Kategorija · {category.items.length} stavki
                   </p>
-                  <h3 className="font-heading text-2xl uppercase tracking-[0.12em] text-soft-white md:text-4xl">
+                  <h2 className="font-heading text-2xl uppercase tracking-[0.12em] text-soft-white md:text-4xl">
                     {category.label}
-                  </h3>
+                  </h2>
                 </div>
                 <div className="gold-line mb-2 hidden flex-1 md:block" />
               </div>

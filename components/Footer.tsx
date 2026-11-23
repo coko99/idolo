@@ -20,14 +20,29 @@ export function Footer() {
               />
             </div>
             <p className="font-accent text-3xl text-gradient-brand-v md:text-4xl">caffe idolo bistro</p>
+            <p className="font-body text-sm leading-relaxed text-cream/65">{SITE.name}</p>
             <p className="font-body text-sm leading-relaxed text-cream/45">
-              Kafa, doručak, hrana i piće u srcu Kruševca.
+              Restoran u Kruševcu za doručak, hranu i koktele.
             </p>
           </div>
 
           <div className="space-y-2">
             <p className="font-body text-[10px] uppercase tracking-[0.2em] text-gold/60">Adresa</p>
-            <p className="font-body text-sm text-cream/65">{SITE.address}</p>
+            <a
+              href={SITE.mapLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-body text-sm text-cream/65 transition-colors hover:text-gold"
+            >
+              {SITE.address}
+            </a>
+            <p className="font-body text-sm leading-relaxed text-cream/45">
+              {SITE.hours.weekdays}
+              <br />
+              {SITE.hours.weekend}
+              <br />
+              {SITE.hours.kitchen}
+            </p>
             <a
               href={phoneHref()}
               className="mt-3 inline-block font-heading text-xl tracking-[0.08em] text-cream transition-colors hover:text-gold"

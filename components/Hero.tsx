@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { phoneHref, whatsappHref } from "@/lib/constants";
+import { phoneHref, SITE, whatsappHref } from "@/lib/constants";
 import { routes } from "@/lib/routes";
 import { heroSlides } from "@/lib/hero-slides";
 import { Button } from "@/components/ui/Button";
@@ -52,7 +52,7 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 flex min-h-[100svh] items-end">
-        <div className="mx-auto w-full max-w-7xl px-5 pb-36 pt-28 md:px-8 md:pb-40 md:pt-36 lg:pb-44">
+        <div className="mx-auto w-full max-w-7xl px-5 pb-44 pt-28 md:px-8 md:pb-40 md:pt-36 lg:pb-44">
           <div className="max-w-3xl">
             <div className="relative mb-4 grid [&>*]:col-start-1 [&>*]:row-start-1">
               {heroSlides.map((item, i) => (
@@ -68,37 +68,32 @@ export function Hero() {
               ))}
             </div>
 
-            <h1 className="font-heading mb-3 text-[clamp(2.75rem,11vw,7.5rem)] uppercase leading-[0.9] tracking-[0.12em] text-soft-white md:tracking-[0.14em]">
-              Idolo
+            <h1 className="mb-6">
+              <span className="font-heading mb-3 block text-[clamp(2.75rem,11vw,7.5rem)] uppercase leading-[0.9] tracking-[0.12em] text-soft-white md:tracking-[0.14em]">
+                Idolo
+              </span>
+              <span className="font-heading block text-sm uppercase tracking-[0.28em] text-cream/75 md:text-base md:tracking-[0.35em]">
+                Caffe Bistro u Kruševcu
+              </span>
             </h1>
-
-            <p className="font-heading mb-8 text-sm uppercase tracking-[0.35em] text-cream/75 md:text-base">
-              Bistro Bar · Kruševac
-            </p>
 
             <div className="gold-line mb-8 w-24" />
 
-            <div className="relative mb-10 grid [&>*]:col-start-1 [&>*]:row-start-1">
-              {heroSlides.map((item, i) => (
-                <p
-                  key={`desc-${item.image}`}
-                  className={`hero-copy-block font-body max-w-md text-[15px] leading-[1.8] text-cream/80 md:text-lg ${
-                    i === index ? "hero-copy-block-active" : "hero-copy-block-inactive"
-                  }`}
-                  aria-hidden={i !== index}
-                >
-                  {item.description}
-                </p>
-              ))}
-            </div>
+            <p className="font-body mb-10 max-w-xl text-[15px] leading-[1.8] text-cream/80 md:text-lg">
+              {SITE.name} je restoran u Kruševcu za doručak, hranu i koktele. Idolo Kruševac je mesto za
+              doručak u Kruševcu tokom jutra i za koktele u Kruševcu kada dan prođe.
+            </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button href="#preporuka">Klikni da ti preporučimo jelo</Button>
               <Button href={routes.menu} variant="outline">
-                Pogledaj meni
+                Pogledaj jelovnik
               </Button>
               <Button href={phoneHref()} variant="outline">
-                Pozovi odmah
+                Pozovi nas
+              </Button>
+              <Button href={SITE.mapLink} variant="outline" target="_blank" rel="noopener noreferrer">
+                Kako do nas
               </Button>
               <Button href={whatsappHref()} variant="whatsapp" target="_blank" rel="noopener noreferrer">
                 Piši na WhatsApp

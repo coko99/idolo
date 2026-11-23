@@ -1,12 +1,14 @@
-import type { Metadata } from "next";
 import { About } from "@/components/About";
 import { PageMain } from "@/components/PageMain";
 import { WhyIdolo } from "@/components/WhyIdolo";
+import { routes } from "@/lib/routes";
+import { ABOUT_DESCRIPTION, ABOUT_TITLE, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "O nama | Idolo Bistro Bar — Kruševac",
-  description: "Upoznaj Idolo Bistro Bar — kafa, doručak i bistro atmosfera u centru Kruševca.",
-};
+export const metadata = pageMetadata({
+  title: ABOUT_TITLE,
+  description: ABOUT_DESCRIPTION,
+  path: routes.about,
+});
 
 export default function AboutPage() {
   return (

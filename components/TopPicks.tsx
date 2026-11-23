@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { routes } from "@/lib/routes";
+import { menuCategoryHref, routes } from "@/lib/routes";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { DeliveryModal } from "@/components/DeliveryModal";
 import { getDishImage } from "@/lib/dish-images";
@@ -13,13 +13,14 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 type ResolvedPick = MenuItem & {
   hook: string;
   category: string;
+  categoryId: string;
   image?: string;
 };
 
-function findMenuItem(name: string): { item: MenuItem; category: string } | null {
+function findMenuItem(name: string): { item: MenuItem; category: string; categoryId: string } | null {
   for (const category of menuCategories) {
     const item = category.items.find((entry) => entry.name === name);
-    if (item) return { item, category: category.label };
+    if (item) return { item, category: category.label, categoryId: category.id };
   }
   return null;
 }
@@ -37,6 +38,7 @@ export function TopPicks() {
           ...found.item,
           hook: pick.hook,
           category: found.category,
+          categoryId: found.categoryId,
           image: pick.image ?? getDishImage(found.item.name) ?? found.item.image,
         } satisfies ResolvedPick;
       })
@@ -173,7 +175,31 @@ export function TopPicks() {
             dark
             accent="Top izbor"
             title="Šta preporučujemo da probaš kod nas"
-            description="Glavna jela koja vredi naručiti — od doručka i burgera do pice i preporuke šefa."
+            description={
+              <>
+                Glavna jela koja vredi naručiti — od doručka i burgera do pice i preporuke šefa. U jelovniku su{" "}
+                <Link href={menuCategoryHref("dorucak")} className="text-grad-peach hover:text-grad-amber">
+                  Domaćinski doručak
+                </Link>
+                ,{" "}
+                <Link href={menuCategoryHref("burgeri")} className="text-grad-peach hover:text-grad-amber">
+                  Twins burgeri
+                </Link>
+                ,{" "}
+                <Link href={menuCategoryHref("preporuka-sefa")} className="text-grad-peach hover:text-grad-amber">
+                  Lava piletina
+                </Link>
+                ,{" "}
+                <Link href={menuCategoryHref("meso")} className="text-grad-peach hover:text-grad-amber">
+                  Bečka šnicla
+                </Link>{" "}
+                i{" "}
+                <Link href={menuCategoryHref("preporuka-sefa")} className="text-grad-peach hover:text-grad-amber">
+                  Preporuka šefa
+                </Link>
+                .
+              </>
+            }
             className="mb-10 md:mb-14"
           />
 
@@ -207,7 +233,7 @@ export function TopPicks() {
                             <>
                               <Image
                                 src={item.image}
-                                alt={copy === 0 ? item.name : ""}
+                                alt={copy === 0 ? `${item.name}, ${item.category} u IDOLO Caffe Bistro, Kruševac` : ""}
                                 fill
                                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                                 sizes="320px"
@@ -228,7 +254,9 @@ export function TopPicks() {
                             {item.category}
                           </p>
                           <h3 className="font-heading mb-2 text-lg uppercase tracking-[0.1em] text-soft-white">
-                            {item.name}
+                            <Link href={menuCategoryHref(item.categoryId)} className="transition-colors hover:text-grad-peach">
+                              {item.name}
+                            </Link>
                           </h3>
                           <p className="font-body mb-3 text-sm leading-relaxed text-grad-peach/85">{item.hook}</p>
                           {price && (
