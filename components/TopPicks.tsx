@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { routes } from "@/lib/routes";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { DeliveryModal } from "@/components/DeliveryModal";
 import { getDishImage } from "@/lib/dish-images";
 import { formatItemPrice, menuCategories, type MenuItem } from "@/lib/menu-data";
@@ -43,6 +43,128 @@ export function TopPicks() {
       .filter(Boolean) as ResolvedPick[];
   }, []);
 
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef(0);
+  const pausedRef = useRef(false);
+  const draggedRef = useRef(false);
+  const dragRef = useRef<{
+    x: number;
+    y: number;
+    offset: number;
+    pointerId: number;
+    axis: "x" | "y" | null;
+  } | null>(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let reduce = motion.matches;
+    const onMotion = () => {
+      reduce = motion.matches;
+    };
+    motion.addEventListener("change", onMotion);
+
+    const loopWidth = () => (track.firstElementChild as HTMLElement | null)?.offsetWidth ?? 0;
+
+    const wrap = (value: number) => {
+      const loop = loopWidth();
+      if (loop <= 0) return 0;
+      let next = value % loop;
+      if (next > 0) next -= loop;
+      return next;
+    };
+
+    const apply = () => {
+      track.style.transform = `translate3d(${offsetRef.current}px,0,0)`;
+    };
+
+    let frame = 0;
+    let last = performance.now();
+
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (!reduce && !pausedRef.current) {
+        const loop = loopWidth();
+        if (loop > 0) {
+          offsetRef.current = wrap(offsetRef.current - (loop / 42) * dt);
+          apply();
+        }
+      }
+      frame = window.requestAnimationFrame(tick);
+    };
+
+    apply();
+    frame = window.requestAnimationFrame(tick);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      motion.removeEventListener("change", onMotion);
+    };
+  }, [picks.length]);
+
+  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.button !== 0) return;
+    pausedRef.current = true;
+    draggedRef.current = false;
+    dragRef.current = {
+      x: event.clientX,
+      y: event.clientY,
+      offset: offsetRef.current,
+      pointerId: event.pointerId,
+      axis: null,
+    };
+  };
+
+  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    const track = trackRef.current;
+    if (!drag || !track || drag.pointerId !== event.pointerId) return;
+
+    const dx = event.clientX - drag.x;
+    const dy = event.clientY - drag.y;
+
+    if (!drag.axis) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      drag.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+      if (drag.axis === "y") return;
+      draggedRef.current = true;
+      viewportRef.current?.setPointerCapture(event.pointerId);
+    }
+
+    if (drag.axis !== "x") return;
+
+    const loop = (track.firstElementChild as HTMLElement | null)?.offsetWidth ?? 0;
+    let next = drag.offset + dx;
+    if (loop > 0) {
+      next %= loop;
+      if (next > 0) next -= loop;
+    }
+    offsetRef.current = next;
+    track.style.transform = `translate3d(${next}px,0,0)`;
+  };
+
+  const endDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    dragRef.current = null;
+    pausedRef.current = false;
+    if (draggedRef.current) {
+      window.setTimeout(() => {
+        draggedRef.current = false;
+      }, 0);
+    }
+  };
+
+  const onClickCapture = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!draggedRef.current) return;
+    event.preventDefault();
+    event.stopPropagation();
+    draggedRef.current = false;
+  };
+
   return (
     <>
       <section id="top-preporuke" className="section-dark relative overflow-hidden py-16 md:py-28">
@@ -55,8 +177,16 @@ export function TopPicks() {
             className="mb-10 md:mb-14"
           />
 
-          <div className="marquee-viewport -mx-5 overflow-hidden md:-mx-8">
-            <div className="marquee-track flex w-max">
+          <div
+            ref={viewportRef}
+            className="marquee-viewport -mx-5 overflow-hidden md:-mx-8"
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onClickCapture={onClickCapture}
+          >
+            <div ref={trackRef} className="marquee-track flex w-max">
               {[0, 1].map((copy) => (
                 <div
                   key={copy}
