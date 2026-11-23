@@ -7,8 +7,7 @@ export type TopPickMeta = {
 export const topPicks: TopPickMeta[] = [
   {
     name: "Idolo kafa",
-    hook: "Potpis jutro — kafa sa sladoledom",
-    image: "/images/hero-coffee.png",
+    hook: "Espresso, sladoled i Baileys",
   },
   {
     name: "Engleski doručak",
@@ -35,7 +34,7 @@ export const topPicks: TopPickMeta[] = [
     hook: "Premium meso za pravi bistro doživljaj",
   },
   {
-    name: "Cheese cake",
+    name: "Cheesecake",
     hook: "Slatki završetak Idolo trenutka",
   },
 ];

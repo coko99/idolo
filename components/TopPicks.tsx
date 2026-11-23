@@ -79,7 +79,11 @@ export function TopPicks() {
                         <div className="image-overlay absolute inset-0 opacity-75" />
                       </>
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-45-brand-muted" />
+                      <div className="absolute inset-0 flex items-center justify-center border border-dashed border-cream/15 bg-gradient-45-brand-muted">
+                        <p className="font-body text-[10px] uppercase tracking-[0.2em] text-cream/35">
+                          Mesto za fotografiju
+                        </p>
+                      </div>
                     )}
                     <span className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-grad-peach/35 bg-black/70 font-heading text-xs tracking-[0.08em] text-grad-peach">
                       {String(item.rank).padStart(2, "0")}

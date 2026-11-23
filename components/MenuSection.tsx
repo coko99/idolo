@@ -4,8 +4,25 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { DeliveryModal } from "@/components/DeliveryModal";
 import { getDishImage } from "@/lib/dish-images";
-import { formatItemPrice, menuCategories, menuTabIds } from "@/lib/menu-data";
+import {
+  formatItemPrice,
+  itemWantsPhoto,
+  menuCategories,
+  menuTabIds,
+  type MenuCategory,
+  type MenuItem,
+} from "@/lib/menu-data";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+
+function menuSections(category: MenuCategory): { group?: string; items: MenuItem[] }[] {
+  const sections: { group?: string; items: MenuItem[] }[] = [];
+  for (const item of category.items) {
+    const last = sections[sections.length - 1];
+    if (last && last.group === item.group) last.items.push(item);
+    else sections.push({ group: item.group, items: [item] });
+  }
+  return sections;
+}
 
 const tagLabels = {
   popularno: "Popularno",
@@ -76,26 +93,46 @@ export function MenuSection() {
             <div className="gold-line mb-2 hidden flex-1 md:block" />
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {activeCategory.items.map((item) => {
+          <div className="space-y-10">
+            {menuSections(activeCategory).map((section, sectionIndex) => (
+              <div key={`${activeCategory.id}-${sectionIndex}-${section.group ?? "main"}`}>
+                {section.group && (
+                  <div className="mb-4">
+                    <p className="font-body text-[10px] uppercase tracking-[0.22em] text-gold/70">
+                      {section.group}
+                    </p>
+                    <div className="gold-line mt-3 max-w-xs" />
+                  </div>
+                )}
+                <div className="grid items-start gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {section.items.map((item) => {
               const price = formatItemPrice(item);
               const image = getDishImage(item.name) ?? item.image;
+              const showPhoto = Boolean(image) || itemWantsPhoto(activeCategory, item);
 
               return (
                 <article
-                  key={`${activeCategory.id}-${item.name}`}
+                  key={`${activeCategory.id}-${section.group ?? ""}-${item.name}`}
                   className="card-dark group overflow-hidden rounded-2xl transition-all duration-500 hover:border-gold/20 hover:shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
                 >
-                  {image && (
+                  {showPhoto && (
                     <div className="relative aspect-[16/10] overflow-hidden bg-black/40">
-                      <Image
-                        src={image}
-                        alt={item.name}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                      <div className="image-overlay absolute inset-0 opacity-80" />
+                      {image ? (
+                        <Image
+                          src={image}
+                          alt={item.name}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center border border-dashed border-cream/15 bg-[radial-gradient(circle_at_center,rgba(232,196,160,0.08),transparent_62%)]">
+                          <p className="font-body text-[10px] uppercase tracking-[0.2em] text-cream/35">
+                            Mesto za fotografiju
+                          </p>
+                        </div>
+                      )}
+                      {image && <div className="image-overlay absolute inset-0 opacity-80" />}
                     </div>
                   )}
 
@@ -117,9 +154,11 @@ export function MenuSection() {
                       </p>
                     )}
 
-                    <p className="font-body mb-2 text-sm leading-[1.7] text-cream/55">
-                      {item.description}
-                    </p>
+                    {item.description && (
+                      <p className="font-body mb-2 text-sm leading-[1.7] text-cream/55">
+                        {item.description}
+                      </p>
+                    )}
 
                     {item.note && (
                       <p className="font-body mb-4 text-xs italic text-cream/35">{item.note}</p>
@@ -136,7 +175,10 @@ export function MenuSection() {
                   </div>
                 </article>
               );
-            })}
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
