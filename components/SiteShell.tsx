@@ -1,3 +1,6 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { ContactFab } from "@/components/ContactFab";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -9,6 +12,9 @@ type SiteShellProps = {
 };
 
 export function SiteShell({ children }: SiteShellProps) {
+  const pathname = usePathname();
+  if (pathname === "/ulaz") return children;
+
   return (
     <>
       <Preloader />
